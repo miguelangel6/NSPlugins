@@ -1,0 +1,77 @@
+<?php
+    global $CFG;
+    // Set to defaults if undefined.
+    
+    if (!isset($config->googleclientid)) {
+        $config->googleclientid = '';
+    }
+    if (!isset($config->googleclientsecret)) {
+        $config->googleclientsecret = '';
+    }
+    if (!isset($config->createuser)) {
+        $config->createuser =  get_string('no');
+    }
+    if (!isset($config->domain)) {
+        $config->domain = '';
+    }
+	$yesno = array( get_string('no'), get_string('yes') );
+?>
+<table cellspacing="0" cellpadding="5" border="0">
+    <tr>
+        <td colspan="3">
+            <h3><?php print_string('config_google_header', 'auth_nsgoogleauth'); ?></h3>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">
+            <label for=clienteid>
+                <?php print_string('google_clienid', 'auth_nsgoogleauth'); ?>
+            </label>
+        </td>
+        <td>
+            <?php   echo html_writer::empty_tag('input',
+                array('type' => 'text', 'id' => 'googleclientid', 'name' => 'googleclientid',
+                    'class' => 'googleclientid', 'value' => $config->googleclientid)); ?>
+        </td>
+        <td><?php print_string('google_uri_help', 'auth_nsgoogleauth'); print "</br><p style=\"color:#C6262C;\">{$CFG->wwwroot}/auth/nsgoogleauth/google_redirect.php</p>" ?></td>
+    </tr>
+    <tr>
+        <td align="right">
+            <label for="clientsecret">
+                <?php print_string('google_secret_client', 'auth_nsgoogleauth'); ?>
+            </label>
+        </td>
+        <td>
+            <?php   echo html_writer::empty_tag('input',
+                array('type' => 'text', 'id' => 'googleclientsecret', 'name' => 'googleclientsecret',
+                    'class' => 'googleclientsecret', 'value' => $config->googleclientsecret)); ?>
+        </td>
+        <td><?php $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+				print_string('google_jsorigin_help', 'auth_nsgoogleauth'); print "</br><p style=\"color:#C6262C;\">".$protocol.$_SERVER['SERVER_NAME']."</p>";?></td>
+    </tr>
+        <td align="right">
+            <label for="createuser">
+                <?php print_string('create_user', 'auth_nsgoogleauth'); ?>
+            </label>
+        </td>
+        <td>
+            <?php    echo html_writer::select($yesno, 'createuser', $config->createuser, false); ?>
+        </td>
+        <td><?php  ?></td>
+    </tr>
+    <tr>
+        <td align="right">
+            <label for="domain">
+                <?php print_string('domain', 'auth_nsgoogleauth'); ?>
+            </label>
+        </td>
+        <td>
+            <?php  echo html_writer::empty_tag('input',
+                array('type' => 'text','id' => 'domain', 'name' => 'domain',
+                    'class' => 'domain', 'value' => $config->domain)); ?>
+        </td>
+        <td><?php   print_string('domain_help', 'auth_nsgoogleauth'); ?></td>
+    </tr>
+    
+    <?php //print_auth_lock_options($this->authtype, $user_fields, get_string('auth_fieldlocks_help', 'auth'), false, false) ?>
+</table>
